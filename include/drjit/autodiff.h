@@ -1529,6 +1529,16 @@ struct DiffArray : ArrayBase<value_t<Type_>, is_mask_v<Type_>, DiffArray<Type_>>
             drjit_raise("vcall_(): not supported in scalar mode!");
     }
 
+    DiffArray prefix_sum_() {
+        if constexpr (is_jit_v<Type>) {
+            if (m_index)
+                drjit_raise("prefix_sum_(): not supported for attached arrays!");
+            return m_value.prefix_sum_();
+        } else {
+            drjit_raise("prefix_sum_(): not supported in scalar mode!");
+        }
+    }
+
     DiffArray block_sum_(size_t block_size) {
         if constexpr (is_jit_v<Type>) {
             if (m_index)

@@ -528,6 +528,20 @@ struct JitArray : ArrayBase<Value_, is_mask_v<Value_>, Derived_> {
         }
     }
 
+    Derived prefix_sum_() {
+        if constexpr (!(is_integral_v<Value> && is_unsigned_v<Value>)) {
+            drjit_raise("Unsupported operand type");
+        } else {
+            uint32_t size = this->size();
+            Derived output = empty_(size);
+            jit_scan_u32(Derived::Backend, (const uint32_t *) data(), size,
+                         (uint32_t *) output.data());
+
+            return output;
+        }
+
+    }
+
     auto compress_() const {
         if constexpr (!is_mask_v<Value>) {
             drjit_raise("Unsupported operand type");

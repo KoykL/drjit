@@ -3799,6 +3799,22 @@ def hypot(a, b):
     )
 
 
+def cumsum(value):
+    '''
+    Prefix sum
+
+    Args:
+        arg (drjit.ArrayBase): A Python or Dr.Jit arithmetic type
+
+    Returns:
+        Cumulative sum
+    '''
+    if _dr.is_jit_v(value):
+        return value.prefix_sum_()
+    else:
+        raise Exception("prefix_sum(): requires a JIT array!")
+
+
 def block_sum(value, size):
     '''
     Sum over elements within blocks
