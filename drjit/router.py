@@ -5868,7 +5868,7 @@ def wrap_ad(source: str, target: str):
                         assert len(res_torch_filtered) == len(grad_out_torch_filtered)
                         assert len(res_torch_filtered) != 0, "did you forgot to enable gradient in pytorch?"
                         
-                        _torch.autograd.backward(flatten(self.res_torch_filtered), flatten(grad_out_torch_filtered))
+                        _torch.autograd.backward(flatten(res_torch_filtered), flatten(grad_out_torch_filtered))
                         
                         def get_grads(args):
                             if isinstance(args, _Sequence) and not isinstance(args, str):
